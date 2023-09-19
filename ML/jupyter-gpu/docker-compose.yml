@@ -1,0 +1,23 @@
+version: "3"
+services:
+   data-notebook:
+      build:
+        context: .
+        dockerfile: dockerfile
+      environment:
+        - PASSWORD=${PASSWORD}
+        - NVIDIA_VISIBLE_DEVICES=all
+      runtime: nvidia
+      volumes:
+        - ./work:/home/usera/codes
+      user: root
+      ports:
+        - "8888:8888"
+      restart: unless-stopped
+      deploy:
+        resources:
+          reservations:
+            devices:
+            - driver: nvidia
+              count: 1 # count limit number of gpu; device_ids limit service definitions: `device_ids: ['0', '3']` use GPU-0 GPU-3
+              capabilities: [gpu]

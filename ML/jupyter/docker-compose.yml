@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+   data-notebook:
+       image: jupyter/datascience-notebook
+       volumes:
+         - ./work:/home/andy/work
+       user: root
+       environment:
+         - JUPYTER_ENABLE_LAB=yes
+         - JUPYTER_TOKEN=${PASSWORD}
+         - CHOWN="/home/andy/work"
+         - GRANT_SUDO=1
+       ports:
+         - "8013:8888"
+       restart: always
